@@ -58,6 +58,14 @@
     @media(min-width:600px){body{padding:24px 0}}
     @media(max-width:380px){.panel{padding:0 40px}.birthday{font-size:54px}.first-content{padding-top:156px}.save{font-size:37px}.date-title{font-size:23px}.place{font-size:29px}.bow{right:47px}.second-content{padding-top:126px}}
     @media(prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+    .rsvp-section{width:100%;background:var(--pink);padding:33px 12px 48px;text-align:center;border-top:1px solid #edbdc9}
+    .rsvp-section .rsvp-eyebrow{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:3px;font-weight:700;color:var(--berry);margin:0 0 12px}
+    .rsvp-section h2{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;font-size:36px;line-height:1.1;color:var(--red);margin:0 auto 12px;max-width:350px}
+    .rsvp-section .rsvp-desc{font-family:'DM Sans',sans-serif;color:var(--berry);font-size:13px;line-height:1.6;margin:0 auto 9px;max-width:320px}
+    .rsvp-frame{display:block;width:100%;height:710px;max-width:430px;margin:0 auto;border:0;background:transparent}
+    .rsvp-fallback{display:inline-block;color:var(--wine);font:600 13px 'DM Sans',sans-serif;text-decoration:underline;text-underline-offset:4px;margin-top:0}
+    @media(max-width:380px){.rsvp-frame{height:740px}.rsvp-section{padding-left:4px;padding-right:4px}}
   </style>
 </head>
 <body>
@@ -99,5 +107,13 @@
     <div class="disclaimer">VALE'S BIRTHDAY</div>
   </section>
 </main>
+<section class="rsvp-section" id="confirmar-asistencia" aria-label="Confirmación de asistencia">
+  <p class="rsvp-eyebrow">VALE'S BIRTHDAY ♡</p>
+  <h2>¿Nos vemos en el cumple?</h2>
+  <p class="rsvp-desc">Confirmá tu asistencia acá abajo. Tu respuesta se guarda automáticamente en la lista de invitados. 💗</p>
+  <iframe class="rsvp-frame" title="Formulario de confirmación de Vale" src="https://script.google.com/macros/s/AKfycbyNv_CN_Z98TELJmxDrd4UYBPZ-Hi43hHG3u4S2zrz1ibHqaqnzP9R6PvPphTuyEl2DDQ/exec" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <a class="rsvp-fallback" href="https://script.google.com/macros/s/AKfycbyNv_CN_Z98TELJmxDrd4UYBPZ-Hi43hHG3u4S2zrz1ibHqaqnzP9R6PvPphTuyEl2DDQ/exec" target="_blank" rel="noopener noreferrer">¿No ves el formulario? Abrilo acá ↗</a>
+</section>
+
 </body>
 </html>
