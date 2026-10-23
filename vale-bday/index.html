@@ -117,5 +117,61 @@
 </section>
 </main>
 
+
+<script id="auto-refresh-check">
+  // GitHub Pages no permite definir Cache-Control para el HTML.
+  // Consultamos una URL única para detectar cambios sin reutilizar la respuesta cacheada.
+  (() => {
+    const LAST_RELOAD_KEY = 'vale-bday-last-auto-reload';
+    let checking = false;
+    let lastCheck = 0;
+
+    function signature(doc) {
+      // Estas son las partes estáticas editables de la invitación.
+      // No inspeccionamos el interior del iframe del formulario.
+      return (doc.querySelector('head style')?.textContent || '') +
+        '\n' + (doc.querySelector('main')?.innerHTML || '');
+    }
+
+    async function checkForUpdate() {
+      const now = Date.now();
+      if (checking || now - lastCheck < 30000 ||
+          document.visibilityState !== 'visible' ||
+          document.activeElement?.tagName === 'IFRAME') return;
+
+      checking = true;
+      lastCheck = now;
+      try {
+        const freshUrl = new URL(window.location.href);
+        freshUrl.searchParams.set('_fresh', String(now));
+        const response = await fetch(freshUrl.href, {
+          cache: 'no-store',
+          credentials: 'same-origin'
+        });
+        if (!response.ok ||
+            !(response.headers.get('content-type') || '').includes('text/html')) return;
+
+        const updatedDoc = new DOMParser().parseFromString(await response.text(), 'text/html');
+        if (signature(document) === signature(updatedDoc)) return;
+
+        // Protección si alguna CDN todavía entrega una versión antigua.
+        let lastReload = 0;
+        try { lastReload = Number(sessionStorage.getItem(LAST_RELOAD_KEY) || 0); } catch (_) {}
+        if (now - lastReload < 30000) return;
+        try { sessionStorage.setItem(LAST_RELOAD_KEY, String(now)); } catch (_) {}
+        window.location.replace(freshUrl.href);
+      } catch (_) {
+        // Si está offline o falla la comprobación, la invitación sigue funcionando.
+      } finally {
+        checking = false;
+      }
+    }
+
+    window.addEventListener('pageshow', () => setTimeout(checkForUpdate, 800));
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) checkForUpdate();
+    });
+  })();
+</script>
 </body>
 </html>
